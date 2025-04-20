@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="en-ig">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital ID | ISA FUW</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== Reuse Main Styles ===== */
+        :root {
+            --igbo-green: #0C6B0D;
+            --igbo-gold: #F5B041;
+            --deep-forest: #0A3D1F;
+            --light-cream: #FFF9E6;
+            --text-dark: #1E1E1E;
+            --text-light: #FFFFFF;
+            
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.12);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.16);
+            
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background-color: var(--light-cream);
+        }
+
+        /* ===== Header (Same as Homepage) ===== */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+        }
+
+        .logo {
+            height: 50px;
+            transition: var(--transition);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: var(--transition);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--igbo-green);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--igbo-green);
+            font-weight: 600;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--igbo-green);
+            cursor: pointer;
+        }
+
+        /* ===== Digital ID Hero Section ===== */
+        .id-hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(10, 61, 31, 0.9) 0%, rgba(12, 107, 13, 0.8) 100%), 
+                        url('images/id-card-bg.jpg') center/cover no-repeat;
+            padding: 8rem 2rem 4rem;
+            color: var(--text-light);
+            position: relative;
+            margin-top: 80px;
+        }
+
+        .id-hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .id-hero-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .id-hero-subtitle {
+            font-size: 1.2rem;
+            max-width: 600px;
+            opacity: 0.9;
+        }
+
+        /* ID Benefits Section */
+        .id-benefits {
+            padding: 5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            color: var(--deep-forest);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--igbo-gold);
+            margin: 0.5rem auto 0;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .benefit-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .benefit-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--igbo-green);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+        }
+
+        .benefit-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--deep-forest);
+        }
+
+        .benefit-desc {
+            color: #666;
+        }
+
+        /* ID Preview Section */
+        .id-preview {
+            background: rgba(10, 61, 31, 0.05);
+            padding: 5rem 2rem;
+        }
+
+        .preview-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .id-card {
+            width: 400px;
+            height: 250px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transition: var(--transition);
+        }
+
+        .id-card:hover {
+            transform: translateY(-10px) rotateY(10deg);
+        }
+
+        .id-card-front {
+            padding: 1.5rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .id-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .id-logo {
+            height: 40px;
+        }
+
+        .id-card-title {
+            font-size: 0.9rem;
+            color: var(--igbo-green);
+            font-weight: 600;
+        }
+
+        .id-card-body {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .id-photo {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            background: #eee;
+            overflow: hidden;
+        }
+
+        .id-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .id-details {
+            flex-grow: 1;
+        }
+
+        .id-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--deep-forest);
+        }
+
+        .id-meta {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 0.3rem;
+        }
+
+        .id-number {
+            font-family: 'Courier New', monospace;
+            font-weight: 600;
+            color: var(--igbo-green);
+        }
+
+        .id-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            font-size: 0.7rem;
+            color: #666;
+        }
+
+        .id-qr {
+            width: 50px;
+            height: 50px;
+            background: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .id-qr i {
+            color: #ccc;
+            font-size: 1.5rem;
+        }
+
+        .id-card-back {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--igbo-green);
+            transform: rotateY(180deg);
+            backface-visibility: hidden;
+            padding: 1.5rem;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .id-back-header {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .id-back-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .id-back-text {
+            font-size: 0.7rem;
+            opacity: 0.8;
+        }
+
+        .id-magnetic {
+            height: 40px;
+            background: #222;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .id-contact {
+            font-size: 0.7rem;
+            margin-top: auto;
+        }
+
+        .preview-content {
+            flex: 1;
+        }
+
+        .preview-title {
+            font-size: 2rem;
+            color: var(--deep-forest);
+            margin-bottom: 1.5rem;
+        }
+
+        .preview-desc {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .preview-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .preview-features li {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.8rem;
+        }
+
+        .preview-features i {
+            color: var(--igbo-green);
+            font-size: 1.2rem;
+            margin-top: 0.2rem;
+        }
+
+        /* Application Form Section */
+        .id-application {
+            padding: 5rem 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .form-container {
+            background: white;
+            border-radius: 12px;
+            padding: 3rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .form-title {
+            font-size: 1.8rem;
+            color: var(--deep-forest);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-subtitle {
+            color: #666;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--deep-forest);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--igbo-green);
+            box-shadow: 0 0 0 3px rgba(12, 107, 13, 0.1);
+        }
+
+        .form-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+        }
+
+        .photo-upload {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .photo-preview {
+            width: 100px;
+            height: 120px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .photo-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+
+        .photo-preview::before {
+            content: 'Passport Photo';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #999;
+            font-size: 0.8rem;
+            text-align: center;
+            width: 100%;
+            padding: 0 1rem;
+        }
+
+        .photo-upload-btn {
+            flex: 1;
+        }
+
+        .upload-btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: var(--igbo-green);
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .upload-btn:hover {
+            background: var(--deep-forest);
+        }
+
+        #photoInput {
+            display: none;
+        }
+
+        .form-note {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 1rem;
+            background: var(--igbo-gold);
+            color: var(--text-dark);
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 1rem;
+        }
+
+        .form-submit:hover {
+            background: #F8C471;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* FAQ Section */
+        .id-faq {
+            background: rgba(10, 61, 31, 0.05);
+            padding: 5rem 2rem;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--deep-forest);
+            transition: var(--transition);
+        }
+
+        .faq-question:hover {
+            color: var(--igbo-green);
+        }
+
+        .faq-question i {
+            transition: var(--transition);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: var(--transition);
+            color: #666;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-item.active .faq-answer {
+            padding-bottom: 1.5rem;
+            max-height: 500px;
+        }
+
+        /* Footer (Same as Homepage) */
+        footer {
+            background: var(--text-dark);
+            color: var(--text-light);
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-logo {
+            height: 60px;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-about p {
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--igbo-green);
+            transform: translateY(-3px);
+        }
+
+        .footer-links h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--igbo-gold);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            opacity: 0.8;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            padding-left: 5px;
+            color: var(--igbo-gold);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            opacity: 0.7;
+        }
+
+        /* ===== Mobile Responsiveness ===== */
+        @media (max-width: 992px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 80px);
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding: 2rem 0;
+                transition: var(--transition);
+                box-shadow: var(--shadow-lg);
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .preview-container {
+                flex-direction: column;
+            }
+
+            .id-card {
+                margin-bottom: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 1rem;
+            }
+
+            .id-hero {
+                padding: 6rem 1rem 4rem;
+                text-align: center;
+                margin-top: 70px;
+            }
+
+            .id-hero-subtitle {
+                margin: 0 auto;
+            }
+
+            .form-container {
+                padding: 2rem 1.5rem;
+            }
+
+            .form-row {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .photo-upload {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+
+        /* ===== Animation Classes ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.2s;
+        }
+        .delay-2 {
+            animation-delay: 0.4s;
+        }
+        .delay-3 {
+            animation-delay: 0.6s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo-link">
+                <img src="images/isa-logo.png" alt="ISA FUW Logo" class="logo">
+            </a>
+
+            <nav class="nav-links">
+                <a href="isa-home.html">Home</a>
+                <a href="isa-about.html">About</a>
+                <a href="isa-event.html">Events</a>
+                <a href="isa-gallery.html">Gallery</a>
+                <a href="isa-Membership.html">Membership</a>
+                <a href="isa-get-your-digital-ID.html" class="active">Digital ID</a>
+                <a href="isa-Contact.html">Contact</a>
+            </nav>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Digital ID Hero Section -->
+    <section class="id-hero">
+        <div class="id-hero-content">
+            <h1 class="id-hero-title animate">Get Your Digital ID</h1>
+            <p class="id-hero-subtitle animate delay-1">Your official ISA membership identification with modern features and benefits</p>
+        </div>
+    </section>
+
+    <!-- ID Benefits Section -->
+    <section class="id-benefits">
+        <div class="section-header">
+            <h2 class="section-title">Why Get Your Digital ID?</h2>
+        </div>
+
+        <div class="benefits-grid">
+            <div class="benefit-card animate">
+                <div class="benefit-icon">
+                    <i class="fas fa-id-card"></i>
+                </div>
+                <h3 class="benefit-title">Official Identification</h3>
+                <p class="benefit-desc">Recognized proof of ISA membership for campus events and activities.</p>
+            </div>
+
+            <div class="benefit-card animate delay-1">
+                <div class="benefit-icon">
+                    <i class="fas fa-ticket-alt"></i>
+                </div>
+                <h3 class="benefit-title">Event Access</h3>
+                <p class="benefit-desc">Exclusive entry to ISA events with discounted or free admission.</p>
+            </div>
+
+            <div class="benefit-card animate delay-2">
+                <div class="benefit-icon">
+                    <i class="fas fa-percentage"></i>
+                </div>
+                <h3 class="benefit-title">Member Discounts</h3>
+                <p class="benefit-desc">Special offers from partner businesses and campus vendors.</p>
+            </div>
+
+            <div class="benefit-card animate">
+                <div class="benefit-icon">
+                    <i class="fas fa-book"></i>
+                </div>
+                <h3 class="benefit-title">Library Privileges</h3>
+                <p class="benefit-desc">Access to ISA resource library and study materials.</p>
+            </div>
+
+            <div class="benefit-card animate delay-1">
+                <div class="benefit-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3 class="benefit-title">Community</h3>
+                <p class="benefit-desc">Connect with fellow Igbo students across departments.</p>
+            </div>
+
+            <div class="benefit-card animate delay-2">
+                <div class="benefit-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3 class="benefit-title">Security</h3>
+                <p class="benefit-desc">Secure digital verification with unique QR code.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ID Preview Section -->
+    <section class="id-preview">
+        <div class="preview-container">
+            <div class="id-card">
+                <div class="id-card-front">
+                    <div class="id-card-header">
+                        <img src="/My Projects/ISA's Website Folder/ISA Icons/isa logo 001.png" alt="ISA Logo" class="id-logo">
+                        <div class="id-card-title">IGBO STUDENTS ASSOCIATION (ISA) FUW CHAPTER</div>
+                    </div>
+                    <div class="id-card-body">
+                        <div class="id-photo">
+                            <img src="/My Projects/ISA's Website Folder/ISA images/ISA Passport.png" alt="Member Photo">
+                        </div>
+                        <div class="id-details">
+                            <div class="id-name">Chidimma Okeke</div>
+                            <div class="id-meta">Department: Computer Science</div>
+                            <div class="id-meta">Matric No: FUW/2021/12345</div>
+                            <div class="id-meta">State of Origin: Anambra</div>
+                            <div class="id-number">ID: ISA-2023-56789</div>
+                        </div>
+                    </div>
+                    <div class="id-card-footer">
+                        <div>Valid through: 12/2025</div>
+                        <div class="id-qr">
+                            <i class="fas fa-qrcode"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="id-card-back">
+                    <div class="id-back-header">
+                        <div class="id-back-title">ISA FUW</div>
+                        <div class="id-back-text">Federal University Wukari</div>
+                    </div>
+                    <div class="id-magnetic"></div>
+                    <div class="id-back-text">
+                        This card is property of ISA FUW. If found, please return to:
+                    </div>
+                    <div class="id-contact">
+                        Student Union Building, FUW<br>
+                        Phone: 08123456789<br>
+                        Email: info@isafuw.org
+                    </div>
+                </div>
+            </div>
+            <div class="preview-content">
+                <h2 class="preview-title animate">Your Digital Membership Card</h2>
+                <p class="preview-desc animate delay-1">
+                    The ISA Digital ID serves as your official membership identification with enhanced features and security. 
+                    It combines traditional identification with modern technology for seamless verification.
+                </p>
+                <ul class="preview-features">
+                    <li class="animate delay-2">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Instant digital delivery to your phone and email</span>
+                    </li>
+                    <li class="animate delay-2">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Unique QR code for quick verification</span>
+                    </li>
+                    <li class="animate delay-2">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Secure digital signature to prevent forgery</span>
+                    </li>
+                    <li class="animate delay-2">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Automatic renewal notifications</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Form Section -->
+    <section class="id-application">
+        <div class="form-container">
+            <div class="form-header">
+                <h2 class="form-title">Apply for Your Digital ID</h2>
+                <p class="form-subtitle">Fill out the form below to request your ISA membership identification</p>
+            </div>
+
+            <form id="idForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName" class="form-label">First Name</label>
+                        <input type="text" id="firstName" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName" class="form-label">Last Name</label>
+                        <input type="text" id="lastName" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="matricNumber" class="form-label">Matriculation Number</label>
+                    <input type="text" id="matricNumber" class="form-control" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="department" class="form-label">Department</label>
+                        <input type="text" id="department" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="level" class="form-label">Level</label>
+                        <select id="level" class="form-control form-select" required>
+                            <option value="">Select Level</option>
+                            <option value="100">100 Level</option>
+                            <option value="200">200 Level</option>
+                            <option value="300">300 Level</option>
+                            <option value="400">400 Level</option>
+                            <option value="500">500 Level</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="state" class="form-label">State of Origin</label>
+                        <select id="state" class="form-control form-select" required>
+                            <option value="">Select State</option>
+                            <option value="Abia">Abia</option>
+                            <option value="Anambra">Anambra</option>
+                            <option value="Ebonyi">Ebonyi</option>
+                            <option value="Enugu">Enugu</option>
+                            <option value="Imo">Imo</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="lga" class="form-label">LGA</label>
+                        <input type="text" id="lga" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone" class="form-label">Phone Number</label>
+                    <input type="tel" id="phone" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" id="email" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Passport Photograph</label>
+                    <div class="photo-upload">
+                        <div class="photo-preview">
+                            <img id="photoPreview" src="#" alt="Preview">
+                        </div>
+                        <div class="photo-upload-btn">
+                            <label for="photoInput" class="upload-btn">
+                                <i class="fas fa-camera"></i> Upload Photo
+                            </label>
+                            <input type="file" id="photoInput" accept="image/*">
+                            <p class="form-note">White background, recent photo (max 2MB)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="form-submit">
+                    <i class="fas fa-id-card"></i> Submit Application
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="id-faq">
+        <div class="faq-container">
+            <div class="section-header">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Who is eligible for an ISA Digital ID?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>All registered Igbo students at Federal University Wukari are eligible for the ISA Digital ID. You must be a paid member of the association to receive your ID card.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>How long does it take to get my Digital ID?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Processing typically takes 3-5 working days after application submission. You'll receive your digital ID via email and it will be available in your ISA member portal.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Is there a fee for the Digital ID?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>The initial Digital ID is free for all paid ISA members. Replacement cards may incur a small administrative fee of ₦500.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>How do I use the QR code on my ID?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>The QR code can be scanned at ISA events for quick check-in and verification. ISA officials will have scanners to validate your membership status.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>What if I lose access to my Digital ID?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>You can always access your ID through the ISA member portal. If you need assistance, contact the ISA secretariat for support in recovering your digital ID.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-about">
+                <img src="Icons/isalogo.png" alt="ISA Logo" class="footer-logo">
+                <p>The Igbo Students Association at Federal University Wukari promotes cultural heritage, academic excellence, and unity among Igbo students.</p>
+                
+                <div class="social-links">
+                    <a href="https://facebook.com/groups/176464233949362/"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="https://chat.whatsapp.com/Dlu8eNnHZRDFsO7wEsUB0B"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="isa-home.html">Home</a></li>
+                    <li><a href="isa-about.html">About Us</a></li>
+                    <li><a href="isa-event.html">Events Calendar</a></li>
+                    <li><a href="isa-gallery.html">Gallery</a></li>
+                    <li><a href="isa-Membership.html">Membership</a></li>
+                    <li><a href="isa-get-your-digital-ID.html">Digital ID</a></li>
+                    <li><a href="isa-about.html">Contact Executives</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#">Igbo Language Tools</a></li>
+                    <li><a href="#">Past Questions</a></li>
+                    <li><a href="#">Scholarships</a></li>
+                    <li><a href="#">Member Handbook</a></li>
+                    <li><a href="#">Alumni Network</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h3>Contact</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> Federal University Wukari, Taraba State</li>
+                    <li><i class="fas fa-phone"></i> +234 704 727 1670</li>
+                    <li><i class="fas fa-envelope"></i> isafuw@gmail.com</li>
+                    <li><i class="fas fa-clock"></i> Office Hours: Mon-Fri, 9AM-4PM</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>&copy; 2024 Igbo Students Association, Federal University Wukari. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+            this.querySelector('i').classList.toggle('fa-times');
+            this.querySelector('i').classList.toggle('fa-bars');
+        });
+
+        // Header Scroll Effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                header.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)';
+                header.style.background = 'rgba(255, 255, 255, 0.96)';
+            }
+        });
+
+        // Photo Upload Preview
+        const photoInput = document.getElementById('photoInput');
+        const photoPreview = document.getElementById('photoPreview');
+
+        photoInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    photoPreview.src = e.target.result;
+                    photoPreview.style.display = 'block';
+                    document.querySelector('.photo-preview::before').style.display = 'none';
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // FAQ Accordion
+        const faqItems = document.querySelectorAll('.faq-item');
+
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                item.classList.toggle('active');
+            });
+        });
+
+        // Form Submission
+        const idForm = document.getElementById('idForm');
+
+        idForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Form validation
+            const requiredFields = this.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.borderColor = 'red';
+                    isValid = false;
+                } else {
+                    field.style.borderColor = '#ddd';
+                }
+            });
+
+            if (!isValid) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            // Simulate form submission
+            alert('Application submitted successfully! Your Digital ID will be processed and sent to your email.');
+            this.reset();
+            photoPreview.style.display = 'none';
+        });
+
+        // 3D Card Effect
+        const idCard = document.querySelector('.id-card');
+        
+        idCard.addEventListener('mousemove', (e) => {
+            const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+            const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+            idCard.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        });
+
+        idCard.addEventListener('mouseenter', () => {
+            idCard.style.transition = 'none';
+        });
+
+        idCard.addEventListener('mouseleave', () => {
+            idCard.style.transition = 'all 0.5s ease';
+            idCard.style.transform = 'rotateY(0deg) rotateX(0deg)';
+        });
+
+        // Animation on Scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { 
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            });
+
+            document.querySelectorAll('.animate').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>

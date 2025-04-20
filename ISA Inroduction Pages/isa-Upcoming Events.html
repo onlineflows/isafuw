@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en-ig">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upcoming Events | ISA FUW</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== Reuse Main Styles ===== */
+        :root {
+            --igbo-green: #0C6B0D;
+            --igbo-gold: #F5B041;
+            --deep-forest: #0A3D1F;
+            --light-cream: #FFF9E6;
+            --text-dark: #1E1E1E;
+            --text-light: #FFFFFF;
+            
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.12);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.16);
+            
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* ===== Base Reset ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background-color: var(--light-cream);
+            overflow-x: hidden;
+        }
+
+        /* ===== Modern Header ===== */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+        }
+
+        .logo {
+            height: 50px;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: var(--transition);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--igbo-green);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--igbo-green);
+            font-weight: 600;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--igbo-green);
+            cursor: pointer;
+        }
+
+        /* ===== Events Page Specific Styles ===== */
+        .events-hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(10, 61, 31, 0.9) 0%, rgba(12, 107, 13, 0.8) 100%), 
+                        url('images/events-hero.jpg') center/cover no-repeat;
+            padding: 8rem 2rem 4rem;
+            color: var(--text-light);
+            position: relative;
+            margin-top: 80px;
+        }
+
+        .events-hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .events-hero-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .events-hero-subtitle {
+            font-size: 1.2rem;
+            max-width: 600px;
+            opacity: 0.9;
+        }
+
+        /* Events Calendar Section */
+        .events-calendar {
+            padding: 5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            color: var(--deep-forest);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--igbo-gold);
+            margin-top: 0.5rem;
+        }
+
+        .view-all {
+            color: var(--igbo-green);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .view-all:hover {
+            gap: 0.8rem;
+        }
+
+        .calendar-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .month-year {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--deep-forest);
+        }
+
+        .calendar-arrows {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .calendar-arrow {
+            background: var(--igbo-green);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .calendar-arrow:hover {
+            background: var(--deep-forest);
+            transform: translateY(-2px);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .calendar-day-header {
+            text-align: center;
+            font-weight: 600;
+            color: var(--igbo-green);
+            padding: 0.5rem;
+        }
+
+        .calendar-day {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            min-height: 100px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .calendar-day:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .day-number {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .event-indicator {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 8px;
+            height: 8px;
+            background: var(--igbo-gold);
+            border-radius: 50%;
+        }
+
+        .calendar-event {
+            font-size: 0.8rem;
+            padding: 0.3rem 0.5rem;
+            background: rgba(12, 107, 13, 0.1);
+            border-left: 3px solid var(--igbo-green);
+            margin-top: 0.5rem;
+            border-radius: 4px;
+        }
+
+        /* Upcoming Events List */
+        .events-list {
+            padding: 0 2rem 5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .event-card {
+            display: flex;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 2rem;
+            transition: var(--transition);
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .event-date {
+            background: var(--igbo-green);
+            color: white;
+            padding: 1.5rem;
+            min-width: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .event-day {
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .event-month {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            margin-top: 0.3rem;
+        }
+
+        .event-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .event-title {
+            font-size: 1.3rem;
+            color: var(--deep-forest);
+            margin-bottom: 0.5rem;
+        }
+
+        .event-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .event-meta i {
+            color: var(--igbo-green);
+            margin-right: 0.3rem;
+        }
+
+        .event-description {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+
+        .event-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: var(--igbo-gold);
+            color: var(--text-dark);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            background: #F8C471;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--igbo-green);
+            border: 2px solid var(--igbo-green);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(12, 107, 13, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Past Events Section */
+        .past-events {
+            background: rgba(10, 61, 31, 0.05);
+            padding: 5rem 2rem;
+        }
+
+        .past-events-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .past-events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .past-event-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .past-event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .past-event-img {
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .past-event-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .past-event-card:hover .past-event-img img {
+            transform: scale(1.05);
+        }
+
+        .past-event-content {
+            padding: 1.5rem;
+        }
+
+        .past-event-date {
+            color: var(--igbo-green);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .past-event-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--deep-forest);
+        }
+
+        .past-event-link {
+            color: var(--igbo-green);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .past-event-link:hover {
+            gap: 0.8rem;
+        }
+
+        /* Footer (Same as Homepage) */
+        footer {
+            background: var(--text-dark);
+            color: var(--text-light);
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-logo {
+            height: 60px;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-about p {
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--igbo-green);
+            transform: translateY(-3px);
+        }
+
+        .footer-links h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--igbo-gold);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            opacity: 0.8;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            padding-left: 5px;
+            color: var(--igbo-gold);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            opacity: 0.7;
+        }
+
+        /* ===== Mobile Responsiveness ===== */
+        @media (max-width: 992px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 80px);
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding: 2rem 0;
+                transition: var(--transition);
+                box-shadow: var(--shadow-lg);
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .event-card {
+                flex-direction: column;
+            }
+
+            .event-date {
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 1rem;
+            }
+
+            .event-day, .event-month {
+                display: inline-block;
+            }
+
+            .event-day {
+                margin-right: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 1rem;
+            }
+
+            .events-hero {
+                padding: 6rem 1rem 4rem;
+                text-align: center;
+                margin-top: 70px;
+            }
+
+            .calendar-grid {
+                grid-template-columns: repeat(7, 1fr);
+                gap: 0.5rem;
+            }
+
+            .calendar-day {
+                min-height: 80px;
+                padding: 0.5rem;
+            }
+
+            .event-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .event-actions {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        /* ===== Animation Classes ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.2s;
+        }
+        .delay-2 {
+            animation-delay: 0.4s;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo-link">
+                <img src="images/isa-logo.png" alt="ISA FUW Logo" class="logo">
+            </a>
+
+            <nav class="nav-links">
+                <a href="isa-home.html" class="active">Home</a>
+                <a href="isa-about.html">About</a>
+                <a href="isa-event.html">Events</a>
+                <a href="isa-gallery.html">Gallery</a>
+                <a href="isa-Membership.html">Membership</a>
+                <a href="isa-get-your-digital-ID.html">Digital ID</a>
+                <a href="isa-Contact.html">Contact</a>
+            </nav>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Events Hero Section -->
+    <section class="events-hero">
+        <div class="events-hero-content">
+            <h1 class="events-hero-title animate">Upcoming Events</h1>
+            <p class="events-hero-subtitle animate delay-1">Discover our cultural celebrations, academic programs, and social gatherings</p>
+        </div>
+    </section>
+
+    <!-- Events Calendar Section -->
+    <section class="events-calendar">
+        <div class="section-header">
+            <h2 class="section-title">Events Calendar</h2>
+            <a href="#" class="view-all">View Full Calendar <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="calendar-nav">
+            <div class="month-year">November 2023</div>
+            <div class="calendar-arrows">
+                <div class="calendar-arrow"><i class="fas fa-chevron-left"></i></div>
+                <div class="calendar-arrow"><i class="fas fa-chevron-right"></i></div>
+            </div>
+        </div>
+
+        <div class="calendar-grid">
+            <div class="calendar-day-header">Sun</div>
+            <div class="calendar-day-header">Mon</div>
+            <div class="calendar-day-header">Tue</div>
+            <div class="calendar-day-header">Wed</div>
+            <div class="calendar-day-header">Thu</div>
+            <div class="calendar-day-header">Fri</div>
+            <div class="calendar-day-header">Sat</div>
+
+            <!-- Calendar Days (sample data) -->
+            <div class="calendar-day empty"></div>
+            <div class="calendar-day empty"></div>
+            <div class="calendar-day empty"></div>
+            <div class="calendar-day">
+                <div class="day-number">1</div>
+            </div>
+            <div class="calendar-day">
+                <div class="day-number">2</div>
+            </div>
+            <div class="calendar-day">
+                <div class="day-number">3</div>
+                <div class="event-indicator"></div>
+                <div class="calendar-event">Igbo Class</div>
+            </div>
+            <div class="calendar-day">
+                <div class="day-number">4</div>
+            </div>
+            <div class="calendar-day">
+                <div class="day-number">5</div>
+            </div>
+            <div class="calendar-day">
+                <div class="day-number">6</div>
+            </div>
+            <div class="calendar-day">
+                <div class="day-number">7</div>
+                <div class="event-indicator"></div>
+                <div class="calendar-event">Exec Meeting</div>
+            </div>
+            <div class="calendar-day">
+                <div class="day-number">8</div>
+            </div>
+            <div class="calendar-day">
+                <div class="day-number">9</div>
+                <div class="event-indicator"></div>
+                <div class="calendar-event">Tutorials</div>
+            </div>
+            <div class="calendar-day">
+                <div class="day-number">10</div>
+            </div>
+            <div class="calendar-day">
+                <div class="day-number">11</div>
+            </div>
+            <div class="calendar-day">
+                <div class="day-number">12</div>
+            </div>
+            <div class="calendar-day">
+                <div class="day-number">13</div>
+            </div>
+            <div class="calendar-day">
+                <div class="day-number">14</div>
+                <div class="event-indicator"></div>
+                <div class="calendar-event">New Yam Prep</div>
+            </div>
+            <div class="calendar-day">
+                <div class="day-number">15</div>
+                <div class="event-indicator"></div>
+                <div class="calendar-event">New Yam Fest</div>
+            </div>
+            <div class="calendar-day">
+                <div class="day-number">16</div>
+            </div>
+            <div class="calendar-day">
+                <div class="day-number">17</div>
+            </div>
+            <div class="calendar-day">
+                <div class="day-number">18</div>
+            </div>
+            <div class="calendar-day">
+                <div class="day-number">19</div>
+            </div>
+            <div class="calendar-day">
+                <div class="day-number">20</div>
+                <div class="event-indicator"></div>
+                <div class="calendar-event">Igbo Class</div>
+            </div>
+            <div class="calendar-day">
+                <div class="day-number">21</div>
+            </div>
+            <div class="calendar-day">
+                <div class="day-number">22</div>
+                <div class="event-indicator"></div>
+                <div class="calendar-event">Dance Rehearsal</div>
+            </div>
+            <div class="calendar-day">
+                <div class="day-number">23</div>
+            </div>
+            <div class="calendar-day">
+                <div class="day-number">24</div>
+            </div>
+            <div class="calendar-day">
+                <div class="day-number">25</div>
+            </div>
+            <div class="calendar-day">
+                <div class="day-number">26</div>
+            </div>
+            <div class="calendar-day">
+                <div class="day-number">27</div>
+                <div class="event-indicator"></div>
+                <div class="calendar-event">Tutorials</div>
+            </div>
+            <div class="calendar-day">
+                <div class="day-number">28</div>
+            </div>
+            <div class="calendar-day">
+                <div class="day-number">29</div>
+            </div>
+            <div class="calendar-day">
+                <div class="day-number">30</div>
+                <div class="event-indicator"></div>
+                <div class="calendar-event">End of Month Social</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upcoming Events List -->
+    <section class="events-list">
+        <h2 class="section-title">Featured Events</h2>
+
+        <div class="event-card animate">
+            <div class="event-date">
+                <span class="event-day">15</span>
+                <span class="event-month">Nov</span>
+            </div>
+            <div class="event-content">
+                <h3 class="event-title">New Yam Festival (Iri Ji Ohuru)</h3>
+                <div class="event-meta">
+                    <span><i class="fas fa-clock"></i> 10:00 AM - 6:00 PM</span>
+                    <span><i class="fas fa-map-marker-alt"></i> FUW Main Auditorium</span>
+                    <span><i class="fas fa-users"></i> Open to Public</span>
+                </div>
+                <p class="event-description">
+                    Join us for our annual celebration of the New Yam Festival, featuring cultural performances, masquerades, yam dishes, and traditional rites. This year's theme is "Preserving Our Heritage in a Digital Age."
+                </p>
+                <div class="event-actions">
+                    <a href="#" class="btn btn-primary"><i class="fas fa-ticket-alt"></i> Register Now</a>
+                    <a href="#" class="btn btn-secondary"><i class="fas fa-info-circle"></i> More Details</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="event-card animate delay-1">
+            <div class="event-date">
+                <span class="event-day">22</span>
+                <span class="event-month">Nov</span>
+            </div>
+            <div class="event-content">
+                <h3 class="event-title">Igbo Dance Workshop</h3>
+                <div class="event-meta">
+                    <span><i class="fas fa-clock"></i> 4:00 PM - 6:00 PM</span>
+                    <span><i class="fas fa-map-marker-alt"></i> Arts Theater</span>
+                    <span><i class="fas fa-users"></i> Members Only</span>
+                </div>
+                <p class="event-description">
+                    Learn traditional Igbo dance steps from our cultural troupe. We'll be focusing on Atilogwu dance techniques this session. No experience needed - just come with energy and enthusiasm!
+                </p>
+                <div class="event-actions">
+                    <a href="#" class="btn btn-primary"><i class="fas fa-user-plus"></i> Sign Up</a>
+                    <a href="#" class="btn btn-secondary"><i class="fas fa-question-circle"></i> What to Bring</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="event-card animate delay-2">
+            <div class="event-date">
+                <span class="event-day">27</span>
+                <span class="event-month">Nov</span>
+            </div>
+            <div class="event-content">
+                <h3 class="event-title">Academic Success Seminar</h3>
+                <div class="event-meta">
+                    <span><i class="fas fa-clock"></i> 2:00 PM - 5:00 PM</span>
+                    <span><i class="fas fa-map-marker-alt"></i> Lecture Hall B2</span>
+                    <span><i class="fas fa-users"></i> ISA Members</span>
+                </div>
+                <p class="event-description">
+                    Special seminar with guest speakers from our alumni network sharing study techniques, exam preparation strategies, and time management tips tailored for FUW students.
+                </p>
+                <div class="event-actions">
+                    <a href="#" class="btn btn-primary"><i class="fas fa-book"></i> Reserve Seat</a>
+                    <a href="#" class="btn btn-secondary"><i class="fas fa-list-ul"></i> Seminar Topics</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Past Events Section -->
+    <section class="past-events">
+        <div class="past-events-container">
+            <h2 class="section-title">Past Events Highlights</h2>
+            <p style="text-align: center; margin-bottom: 3rem;">Relive our memorable moments from previous events</p>
+
+            <div class="past-events-grid">
+                <div class="past-event-card animate">
+                    <div class="past-event-img">
+                        <img src="images/past-event1.jpg" alt="Cultural Day">
+                    </div>
+                    <div class="past-event-content">
+                        <div class="past-event-date">October 15, 2023</div>
+                        <h3 class="past-event-title">Igbo Cultural Day</h3>
+                        <p>A vibrant celebration featuring traditional attire, dance competitions, and Igbo cuisine.</p>
+                        <a href="#" class="past-event-link">View Photos <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="past-event-card animate delay-1">
+                    <div class="past-event-img">
+                        <img src="images/past-event2.jpg" alt="Career Workshop">
+                    </div>
+                    <div class="past-event-content">
+                        <div class="past-event-date">September 28, 2023</div>
+                        <h3 class="past-event-title">Career Pathways Workshop</h3>
+                        <p>Alumni panel discussing career opportunities and professional development.</p>
+                        <a href="#" class="past-event-link">View Photos <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="past-event-card animate delay-2">
+                    <div class="past-event-img">
+                        <img src="images/past-event3.jpg" alt="Language Class">
+                    </div>
+                    <div class="past-event-content">
+                        <div class="past-event-date">August 5, 2023</div>
+                        <h3 class="past-event-title">Igbo Language Intensive</h3>
+                        <p>Weekend immersion program for beginners and intermediate learners.</p>
+                        <a href="#" class="past-event-link">View Photos <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-about">
+                <img src="images/isa-logo-white.png" alt="ISA Logo" class="footer-logo">
+                <p>The Igbo Students Association at Federal University Wukari promotes cultural heritage, academic excellence, and unity among Igbo students.</p>
+                
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="events.html">Events Calendar</a></li>
+                    <li><a href="gallery.html">Photo Gallery</a></li>
+                    <li><a href="isa-Membership.html">Membership</a></li>
+                    <li><a href="isa-get-your-digital-ID.html">Digital ID</a></li>
+                    <li><a href="contact.html">Contact Executives</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#">Igbo Language Tools</a></li>
+                    <li><a href="#">Past Questions</a></li>
+                    <li><a href="#">Scholarships</a></li>
+                    <li><a href="#">Member Handbook</a></li>
+                    <li><a href="#">Alumni Network</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h3>Contact</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> Student Union Building, FUW</li>
+                    <li><i class="fas fa-phone"></i> +234 812 345 6789</li>
+                    <li><i class="fas fa-envelope"></i> info@isafuw.org</li>
+                    <li><i class="fas fa-clock"></i> Office Hours: Mon-Fri, 9AM-4PM</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>&copy; 2023 Igbo Students Association, Federal University Wukari. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+            this.querySelector('i').classList.toggle('fa-times');
+            this.querySelector('i').classList.toggle('fa-bars');
+        });
+
+        // Header Scroll Effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                header.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)';
+                header.style.background = 'rgba(255, 255, 255, 0.96)';
+            }
+        });
+
+        // Calendar Navigation
+        const monthYear = document.querySelector('.month-year');
+        const prevArrow = document.querySelector('.calendar-arrow:first-child');
+        const nextArrow = document.querySelector('.calendar-arrow:last-child');
+        
+        const months = ["January", "February", "March", "April", "May", "June", 
+                       "July", "August", "September", "October", "November", "December"];
+        
+        let currentMonth = 10; // November
+        let currentYear = 2023;
+        
+        function updateCalendar() {
+            monthYear.textContent = `${months[currentMonth]} ${currentYear}`;
+            // In a real implementation, you would update the calendar days here
+        }
+        
+        prevArrow.addEventListener('click', function() {
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            updateCalendar();
+        });
+        
+        nextArrow.addEventListener('click', function() {
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            updateCalendar();
+        });
+
+        // Animation on Scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { 
+                threshold: 0.1,
+                rootMargin: '0px 0px -100px 0px'
+            });
+
+            document.querySelectorAll('.animate').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>

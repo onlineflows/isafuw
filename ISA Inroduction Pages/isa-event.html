@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en-ig">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events | ISA FUW</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        /* ===== Base Styles ===== */
+        :root {
+            --igbo-green: #0C6B0D;
+            --igbo-gold: #F5B041;
+            --deep-forest: #0A3D1F;
+            --light-cream: #FFF9E6;
+            --text-dark: #1E1E1E;
+            --text-light: #FFFFFF;
+            
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.12);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.16);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background-color: var(--light-cream);
+        }
+
+         /* ===== Modern Header ===== */
+         header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+        }
+
+        .logo {
+            height: 50px;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: var(--transition);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--igbo-green);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--igbo-green);
+            font-weight: 600;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--igbo-green);
+            cursor: pointer;
+        }
+
+        /* ===== Hero Section ===== */
+        .events-hero {
+            background: linear-gradient(rgba(10, 61, 31, 0.85), rgba(10, 61, 31, 0.85)), 
+                        url('images/events-hero.jpg') center/cover;
+            color: white;
+            padding: 8rem 2rem 5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .events-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('images/wave-pattern.svg') repeat-x;
+            background-size: contain;
+            z-index: 1;
+        }
+
+        .events-hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1rem;
+        }
+
+        .events-hero p {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* ===== Events Filter ===== */
+        .events-filter {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .filter-container {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--deep-forest);
+        }
+
+        .filter-group select, 
+        .filter-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+        }
+
+        .filter-button {
+            background: var(--igbo-green);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+
+        .filter-button:hover {
+            background: var(--deep-forest);
+            transform: translateY(-2px);
+        }
+
+        /* ===== Events Grid ===== */
+        .events-section {
+            padding: 3rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .event-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .event-card.featured::before {
+            content: 'Featured';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--igbo-gold);
+            color: var(--text-dark);
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 1;
+        }
+
+        .event-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .event-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .event-card:hover .event-image img {
+            transform: scale(1.05);
+        }
+
+        .event-date {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .event-content {
+            padding: 1.5rem;
+        }
+
+        .event-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--deep-forest);
+        }
+
+        .event-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .event-meta i {
+            color: var(--igbo-green);
+            margin-right: 0.3rem;
+        }
+
+        .event-excerpt {
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+
+        .event-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .event-button {
+            background: var(--igbo-green);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .event-button:hover {
+            background: var(--deep-forest);
+        }
+
+        .event-reminder {
+            color: #666;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .event-reminder:hover {
+            color: var(--igbo-green);
+        }
+
+        /* ===== Upcoming Highlights ===== */
+        .highlight-section {
+            background: var(--deep-forest);
+            color: white;
+            padding: 6rem 2rem;
+            position: relative;
+        }
+
+        .highlight-section::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('images/wave-pattern-light.svg') repeat-x;
+            background-size: contain;
+        }
+
+        .highlight-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .highlight-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 3rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .highlight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('images/uli-pattern.png');
+            opacity: 0.05;
+            z-index: 0;
+        }
+
+        .highlight-content {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .highlight-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--igbo-gold);
+        }
+
+        .highlight-date {
+            display: inline-block;
+            background: var(--igbo-gold);
+            color: var(--text-dark);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .highlight-image {
+            flex: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .highlight-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .highlight-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+
+        /* ===== Responsive ===== */
+        @media (min-width: 768px) {
+            .highlight-card {
+                flex-direction: row;
+                align-items: center;
+            }
+            
+            .event-date {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+
+        /* ===== Cultural Elements ===== */
+        .igbo-proverb {
+            font-style: italic;
+            padding: 1.5rem;
+            background: rgba(12, 107, 13, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid var(--igbo-gold);
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .igbo-proverb::before {
+            content: '"';
+            font-size: 5rem;
+            position: absolute;
+            top: -1rem;
+            left: 0.5rem;
+            color: rgba(12, 107, 13, 0.2);
+            line-height: 1;
+            font-family: serif;
+        }
+
+        .kolanut-icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: url('images/kolanut-icon.svg') no-repeat center;
+            background-size: contain;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            background: var(--text-dark);
+            color: var(--text-light);
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-logo {
+            height: 60px;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-about p {
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--igbo-green);
+            transform: translateY(-3px);
+        }
+
+        .footer-links h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--igbo-gold);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            opacity: 0.8;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            padding-left: 5px;
+            color: var(--igbo-gold);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo-link">
+                <img src="images/isa-logo.png" alt="ISA FUW Logo" class="logo">
+            </a>
+
+            <nav class="nav-links">
+                <a href="isa-home.html">Home</a>
+                <a href="isa-about.html">About</a>
+                <a href="isa-event.html" class="active">Events</a>
+                <a href="isa-gallery.html">Gallery</a>
+                <a href="isa-Membership.html">Membership</a>
+                <a href="isa-get-your-digital-ID.html">Digital ID</a>
+                <a href="isa-Contact.html">Contact</a>
+            </nav>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="events-hero">
+        <h1>Our Events & Programs</h1>
+        <p>Discover upcoming cultural celebrations, academic workshops, and social gatherings</p>
+    </section>
+
+    <!-- Events Filter -->
+    <section class="events-filter">
+        <div class="filter-container">
+            <div class="filter-group">
+                <label for="event-type">Event Type</label>
+                <select id="event-type">
+                    <option value="all">All Events</option>
+                    <option value="cultural">Cultural</option>
+                    <option value="academic">Academic</option>
+                    <option value="social">Social</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="event-month">Month</label>
+                <select id="event-month">
+                    <option value="all">All Months</option>
+                    <option value="october">October</option>
+                    <option value="november">November</option>
+                    <option value="december">December</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="event-search">Search</label>
+                <input type="text" id="event-search" placeholder="Event name or keyword">
+            </div>
+            
+            <button class="filter-button">
+                <i class="fas fa-filter"></i> Filter
+            </button>
+        </div>
+    </section>
+
+    <!-- Events Grid -->
+    <section class="events-section">
+        <h2 class="section-title">Upcoming Events</h2>
+        
+        <div class="igbo-proverb">
+            "Onye na-eme ememe, ọ na-eme ka ndụ dị ụtọ" - Whoever organizes events makes life enjoyable
+        </div>
+        
+        <div class="events-grid">
+            <!-- Event Card 1 -->
+            <div class="event-card featured">
+                <div class="event-image">
+                    <img src="/My Projects/ISA's Website Folder/ISA images/Igbo Cultural Day.jpg" alt="Igbo Cultural Day">
+                    <div class="event-date">
+                        <i class="fas fa-calendar-alt"></i> Oct 15-19, 2024
+                    </div>
+                </div>
+                <div class="event-content">
+                    <h3 class="event-title">Igbo Cultural Week</h3>
+                    <div class="event-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> FUW Main Auditorium</span>
+                        <span><i class="fas fa-clock"></i> 10AM Daily</span>
+                    </div>
+                    <p class="event-excerpt">Our annual celebration featuring traditional dances, fashion shows, culinary exhibitions, and guest lectures on Igbo heritage.</p>
+                    <div class="event-actions">
+                        <a href="event-cultural-week.html" class="event-button">View Details</a>
+                        <span class="event-reminder">
+                            <i class="fas fa-bell"></i> Remind me
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Event Card 2 -->
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="/My Projects/ISA's Website Folder/ISA images/Academic Bootcamp.jpg" alt="Academic Bootcamp">
+                    <div class="event-date">
+                        <i class="fas fa-calendar-alt"></i> Nov 5, 2024
+                    </div>
+                </div>
+                <div class="event-content">
+                    <h3 class="event-title">Academic Bootcamp</h3>
+                    <div class="event-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> Science Lecture Hall</span>
+                        <span><i class="fas fa-clock"></i> 9AM - 4PM</span>
+                    </div>
+                    <p class="event-excerpt">Intensive tutorial sessions for 100-300L students in Mathematics, Chemistry, and Economics with senior tutors.</p>
+                    <div class="event-actions">
+                        <a href="event-bootcamp.html" class="event-button">View Details</a>
+                        <span class="event-reminder">
+                            <i class="fas fa-bell"></i> Remind me
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Event Card 3 -->
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="/My Projects/ISA's Website Folder/ISA images/Career Workshop.jpg" alt="Career Workshop">
+                    <div class="event-date">
+                        <i class="fas fa-calendar-alt"></i> Nov 20, 2024
+                    </div>
+                </div>
+                <div class="event-content">
+                    <h3 class="event-title">Career Workshop</h3>
+                    <div class="event-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> Virtual & In-Person</span>
+                        <span><i class="fas fa-clock"></i> 2PM - 5PM</span>
+                    </div>
+                    <p class="event-excerpt">Learn CV writing, interview skills, and career planning from our alumni network across various industries.</p>
+                    <div class="event-actions">
+                        <a href="event-career-workshop.html" class="event-button">View Details</a>
+                        <span class="event-reminder">
+                            <i class="fas fa-bell"></i> Remind me
+                        </span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Event Card 4 -->
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="/My Projects/ISA's Website Folder/ISA images/Igbo Language Class.jpg" alt="Igbo Language Class">
+                    <div class="event-date">
+                        <i class="fas fa-calendar-alt"></i> Every Saturday
+                    </div>
+                </div>
+                <div class="event-content">
+                    <h3 class="event-title">Asụsụ Igbo Classes</h3>
+                    <div class="event-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> ISA Secretariat</span>
+                        <span><i class="fas fa-clock"></i> 3PM - 5PM</span>
+                    </div>
+                    <p class="event-excerpt">Weekly Igbo language lessons for beginners and intermediate learners. Focus on pronunciation and dialects.</p>
+                    <div class="event-actions">
+                        <a href="event-language-class.html" class="event-button">View Details</a>
+                        <span class="event-reminder">
+                            <i class="fas fa-bell"></i> Remind me
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upcoming Highlight -->
+    <section class="highlight-section">
+        <div class="highlight-container">
+            <h2 class="section-title" style="color: white;">Featured Annual Event</h2>
+            
+            <div class="highlight-card">
+                <div class="highlight-content">
+                    <div class="highlight-date">December 12-15, 2024</div>
+                    <h3 class="highlight-title">Igbo New Yam Festival</h3>
+                    <p>Join us for our grandest cultural celebration of the year - the traditional New Yam Festival (Iri Ji Ohuru). Experience:</p>
+                    <ul style="margin: 1rem 0; padding-left: 1.5rem;">
+                        <li>Yam cutting ceremony by traditional rulers</li>
+                        <li>Cultural dance competitions</li>
+                        <li>Igbo cuisine showcase</li>
+                        <li>Fashion parade with traditional attire</li>
+                    </ul>
+                    <div class="highlight-actions">
+                        <a href="#" class="event-button">Register Now</a>
+                        <a href="#" class="event-button" style="background: transparent; border: 2px solid white;">Learn More</a>
+                    </div>
+                </div>
+                <div class="highlight-image">
+                    <img src="/My Projects/ISA's Website Folder/ISA images/yam-festival.jpg" alt="New Yam Festival">
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-about">
+                <img src="Icons/isalogo.png" alt="ISA Logo" class="footer-logo">
+                <p>The Igbo Students Association at Federal University Wukari promotes cultural heritage, academic excellence, and unity among Igbo students.</p>
+                
+                <div class="social-links">
+                    <a href="https://facebook.com/groups/176464233949362/"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="https://chat.whatsapp.com/Dlu8eNnHZRDFsO7wEsUB0B"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="isa-home.html">Home</a></li>
+                    <li><a href="isa-about.html">About Us</a></li>
+                    <li><a href="isa-event.html">Events Calendar</a></li>
+                    <li><a href="isa-gallery.html">Gallery</a></li>
+                    <li><a href="isa-Membership.html">Membership</a></li>
+                    <li><a href="isa-get-your-digital-ID.html">Digital ID</a></li>
+                    <li><a href="isa-about.html">Contact Executives</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#">Igbo Language Tools</a></li>
+                    <li><a href="#">Past Questions</a></li>
+                    <li><a href="#">Scholarships</a></li>
+                    <li><a href="#">Member Handbook</a></li>
+                    <li><a href="#">Alumni Network</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h3>Contact</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> Federal University Wukari, Taraba State</li>
+                    <li><i class="fas fa-phone"></i> +234 704 727 1670</li>
+                    <li><i class="fas fa-envelope"></i> isafuw@gmail.com</li>
+                    <li><i class="fas fa-clock"></i> Office Hours: Mon-Fri, 9AM-4PM</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>&copy; 2024 Igbo Students Association, Federal University Wukari. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // Initialize date picker
+        flatpickr("#event-month", {
+            mode: "range",
+            dateFormat: "Y-m-d",
+            minDate: "today"
+        });
+
+        // Event filtering functionality
+        document.querySelector('.filter-button').addEventListener('click', function() {
+            const type = document.getElementById('event-type').value;
+            const month = document.getElementById('event-month').value;
+            const search = document.getElementById('event-search').value.toLowerCase();
+            
+            document.querySelectorAll('.event-card').forEach(card => {
+                const cardType = card.dataset.type;
+                const cardDate = card.dataset.date;
+                const cardTitle = card.querySelector('.event-title').textContent.toLowerCase();
+                const cardExcerpt = card.querySelector('.event-excerpt').textContent.toLowerCase();
+                
+                const typeMatch = type === 'all' || cardType === type;
+                const monthMatch = month === 'all' || cardDate.includes(month);
+                const searchMatch = search === '' || 
+                                    cardTitle.includes(search) || 
+                                    cardExcerpt.includes(search);
+                
+                if (typeMatch && monthMatch && searchMatch) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Add event reminder functionality
+        document.querySelectorAll('.event-reminder').forEach(reminder => {
+            reminder.addEventListener('click', function() {
+                const eventTitle = this.closest('.event-card').querySelector('.event-title').textContent;
+                const eventDate = this.closest('.event-card').querySelector('.event-date').textContent;
+                
+                if (confirm(`Set reminder for "${eventTitle}" on ${eventDate}?`)) {
+                    this.innerHTML = '<i class="fas fa-check"></i> Reminder set';
+                    this.style.color = 'var(--igbo-green)';
+                    
+                    // Here you would typically connect to a calendar API
+                }
+            });
+        });
+
+        // Animate event cards on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.event-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'all 0.5s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en-ig">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISA FUW | Igbo Students Association</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== Modern Variables ===== */
+        :root {
+            --igbo-green: #0C6B0D;
+            --igbo-gold: #F5B041;
+            --deep-forest: #0A3D1F;
+            --light-cream: #FFF9E6;
+            --text-dark: #1E1E1E;
+            --text-light: #FFFFFF;
+            
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.12);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.16);
+            
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* ===== Base Reset ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background-color: var(--light-cream);
+            overflow-x: hidden;
+        }
+
+        /* ===== Modern Header ===== */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+        }
+
+        .logo {
+            height: 50px;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: var(--transition);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--igbo-green);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--igbo-green);
+            font-weight: 600;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--igbo-green);
+            cursor: pointer;
+        }
+
+        .user-actions{
+        padding-top: 20px;
+        padding-bottom: 20px;
+        padding-left: 50px;
+        padding-right: 50px;
+        border-radius: 25%;
+        background-color: white;
+        color: #0C6B0D;
+        text-decoration: none;
+        font-weight: 400;
+        transition: ease;
+        }
+
+        .btn-outline{
+        width: 100%;
+        height: 100%;
+        
+        background-color: white;
+        color: #0C6B0D;
+        text-decoration: none;
+        font-weight: 400;
+        transition: ease;
+       }
+
+       .user-actions a:hover::after{
+        background-color: #0C6B0D;
+        color: white;
+        font-weight: 400;
+        scale: 1.1;
+       }
+
+        /* ===== Hero Section ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, rgba(10, 61, 31, 0.9) 0%, rgba(12, 107, 13, 0.8) 100%), 
+                        url('images/hero-bg.jpg') center/cover no-repeat;
+            padding: 8rem 2rem 4rem;
+            color: var(--text-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('images/wave-pattern.svg') repeat-x;
+            background-size: contain;
+            z-index: 2;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            max-width: 600px;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary {
+            background: var(--igbo-gold);
+            color: var(--text-dark);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            background: #F8C471;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-light);
+            border: 2px solid var(--text-light);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-3px);
+        }
+
+        /* ===== Featured Section ===== */
+        .featured {
+            padding: 6rem 2rem;
+            background: var(--light-cream);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--deep-forest);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--igbo-gold);
+            margin: 1rem auto 0;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-img {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .feature-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .feature-card:hover .feature-img img {
+            transform: scale(1.05);
+        }
+
+        .feature-content {
+            padding: 1.5rem;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--deep-forest);
+        }
+
+        .feature-desc {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .feature-link {
+            color: var(--igbo-green);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .feature-link:hover {
+            color: var(--deep-forest);
+            gap: 0.8rem;
+        }
+
+        /* ===== Cultural Showcase ===== */
+        .cultural-showcase {
+            padding: 6rem 2rem;
+            background: var(--deep-forest);
+            color: var(--text-light);
+            position: relative;
+        }
+
+        .cultural-showcase::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('images/wave-pattern-light.svg') repeat-x;
+            background-size: contain;
+        }
+
+        .cultural-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+
+        .cultural-item {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .cultural-text {
+            flex: 1;
+        }
+
+        .cultural-media {
+            flex: 1;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .cultural-media img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .igbo-proverb {
+            font-style: italic;
+            font-size: 1.2rem;
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+            border-left: 4px solid var(--igbo-gold);
+            margin: 1.5rem 0;
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            background: var(--text-dark);
+            color: var(--text-light);
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-logo {
+            height: 60px;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-about p {
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--igbo-green);
+            transform: translateY(-3px);
+        }
+
+        .footer-links h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--igbo-gold);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            opacity: 0.8;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            padding-left: 5px;
+            color: var(--igbo-gold);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            opacity: 0.7;
+        }
+
+        /* ===== Animations ===== */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* ===== Mobile Responsiveness ===== */
+        @media (max-width: 992px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .cultural-item {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 1rem;
+            }
+
+            .hero {
+                padding: 6rem 1rem 4rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        /* ===== Igbo Cultural Elements ===== */
+        .kolanut-icon {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background: url('images/kolanut-icon.svg') no-repeat center;
+            background-size: contain;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+
+        .uli-pattern {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('images/uli-pattern.png') repeat;
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo-link">
+                <img src="/My Projects/ISA's Website Folder/ISA Icons/isa logo 001.png" alt="ISA FUW Logo" class="logo">
+            </a>
+
+            <nav class="nav-links">
+                <a href="isa-home.html" class="active">Home</a>
+                <a href="isa-about.html">About</a>
+                <a href="isa-event.html">Events</a>
+                <a href="isa-gallery.html">Gallery</a>
+                <a href="isa-Membership.html">Membership</a>
+                <a href="isa-get-your-digital-ID.html">Digital ID</a>
+                <a href="isa-Contact.html">Contact</a>
+            </nav>
+
+            <div class="user-actions">
+                <a href="login.html" class="btn-outline">Login</a>
+            </div>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="uli-pattern"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Preserving Our Heritage, Building Our Future</h1>
+            <p class="hero-subtitle">The Igbo Students Association at Federal University Wukari fosters cultural pride, academic excellence, and community development among Igbo students in Taraba State.</p>
+            
+            <div class="cta-buttons">
+                <a href="Join ISA.html" class="btn btn-primary">
+                    <i class="fas fa-user-plus"></i> Join ISA
+
+                </a>
+                <a href="isa-Upcoming Events.html" class="btn btn-secondary">
+                    <i class="fas fa-calendar-alt"></i> Upcoming Events
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Sections -->
+    <section class="featured">
+        <h2 class="section-title">Why Join ISA FUW?</h2>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-img">
+                    <img src="/My Projects/ISA's Website Folder/ISA images/ISA Cultural Events.jpg" alt="Cultural Events">
+                </div>
+                <div class="feature-content">
+                    <h3 class="feature-title"><span class="kolanut-icon"></span> Cultural Enrichment</h3>
+                    <p class="feature-desc">Participate in Igbo language classes, traditional dance workshops, and our annual Igbo Cultural Festival.</p>
+                    <a href="Join ISA.html" class="feature-link">
+                        See Photos <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-img">
+                    <img src="/My Projects/ISA's Website Folder/ISA images/ISA Academic Support.jpg" alt="Academic Support">
+                </div>
+                <div class="feature-content">
+                    <h3 class="feature-title"><span class="kolanut-icon"></span> Academic Support</h3>
+                    <p class="feature-desc">Access our tutorial programs, past question bank, and mentorship from senior students and alumni.</p>
+                    <a href="Join ISA.html" class="feature-link">
+                        Explore Resources <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-img">
+                    <img src="/My Projects/ISA's Website Folder/ISA images/ISA Community.jpg" alt="Community">
+                </div>
+                <div class="feature-content">
+                    <h3 class="feature-title"><span class="kolanut-icon"></span> Strong Community</h3>
+                    <p class="feature-desc">Connect with fellow Igbo students through social events, welfare programs, and leadership opportunities.</p>
+                    <a href="Join ISA.html" class="feature-link">
+                        Meet Members <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cultural Showcase -->
+    <section class="cultural-showcase">
+        <div class="cultural-container">
+            <div class="cultural-item">
+                <div class="cultural-text">
+                    <h2 class="section-title" style="color: var(--text-light);">Igbo Language Revival</h2>
+                    <p>Our weekly "Asụsụ Igbo" classes help members learn and preserve our native language, with special focus on different dialects from across Igboland.</p>
+                    
+                    <div class="igbo-proverb">
+                        "Asụsụ bụ ndụ" - Language is life
+                    </div>
+                    
+                    <a href="Join ISA.html" class="btn btn-secondary">
+                        <i class="fas fa-language"></i> Learn Igbo
+                    </a>
+                </div>
+                <div class="cultural-media">
+                    <img src="/My Projects/ISA's Website Folder/ISA images/Igbo lang.jpg" alt="Igbo Language Class">
+                </div>
+            </div>
+
+            <div class="cultural-item">
+                <div class="cultural-media floating">
+                    <img src="/My Projects/ISA's Website Folder/ISA images/Traditional Dance.jpg" alt="Traditional Dance">
+                </div>
+                <div class="cultural-text">
+                    <h2 class="section-title" style="color: var(--text-light);">Traditional Arts</h2>
+                    <p>From "Atilogwu" dance to "Uri" art workshops, we keep Igbo traditions alive through hands-on experiences and performances.</p>
+                    
+                    <div class="igbo-proverb">
+                        "Onye na-agba egwu, ọ na-ama egwu" - The dancer knows the dance
+                    </div>
+                    
+                    <a href="https://chat.whatsapp.com/Dlu8eNnHZRDFsO7wEsUB0B" class="btn btn-secondary">
+                        <i class="fas fa-music"></i> Join Dance Group
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-about">
+                <img src="/My Projects/ISA's Website Folder/ISA Icons/isa logo 001.png" alt="ISA Logo" class="footer-logo">
+                <p>The Igbo Students Association at Federal University Wukari promotes cultural heritage, academic excellence, and unity among Igbo students.</p>
+                
+                <div class="social-links">
+                    <a href="https://facebook.com/groups/176464233949362/"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="https://chat.whatsapp.com/Dlu8eNnHZRDFsO7wEsUB0B"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="isa-home.html">Home</a></li>
+                    <li><a href="isa-about.html">About Us</a></li>
+                    <li><a href="isa-event.html">Events Calendar</a></li>
+                    <li><a href="isa-gallery.html">Gallery</a></li>
+                    <li><a href="isa-Membership.html">Membership</a></li>
+                    <li><a href="isa-get-your-digital-ID.html">Digital ID</a></li>
+                    <li><a href="isa-about.html">Contact Executives</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#">Igbo Language Tools</a></li>
+                    <li><a href="#">Past Questions</a></li>
+                    <li><a href="#">Scholarships</a></li>
+                    <li><a href="#">Member Handbook</a></li>
+                    <li><a href="#">Alumni Network</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h3>Contact</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> Federal University Wukari, Taraba State</li>
+                    <li><i class="fas fa-phone"></i> +234 704 727 1670</li>
+                    <li><i class="fas fa-envelope"></i> isafuw@gmail.com</li>
+                    <li><i class="fas fa-clock"></i> Office Hours: Mon-Fri, 9AM-4PM</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>&copy; 2024 Igbo Students Association, Federal University Wukari. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // Header Scroll Effect
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                document.querySelector('header').style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+            } else {
+                document.querySelector('header').style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)';
+            }
+        });
+
+        // Animation on Scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.feature-card, .cultural-item').forEach(card => {
+                observer.observe(card);
+            });
+        });
+
+        // Language Toggle
+        function toggleLanguage() {
+            const html = document.documentElement;
+            if (html.lang === 'en') {
+                html.lang = 'ig';
+                // Here you would add actual translation logic
+                console.log('Switched to Igbo');
+            } else {
+                html.lang = 'en';
+                console.log('Switched to English');
+            }
+        }
+    </script>
+</body>
+</html>

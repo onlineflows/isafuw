@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en-ig">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | ISA FUW</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/css/lightgallery.min.css">
+    <style>
+        /* ===== Base Styles ===== */
+        :root {
+            --igbo-green: #0C6B0D;
+            --igbo-gold: #F5B041;
+            --deep-forest: #0A3D1F;
+            --light-cream: #FFF9E6;
+            --text-dark: #1E1E1E;
+            --text-light: #FFFFFF;
+            
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.12);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.16);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background-color: var(--light-cream);
+        }
+
+         /* ===== Modern Header ===== */
+         header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+        }
+
+        .logo {
+            height: 50px;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: var(--transition);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--igbo-green);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--igbo-green);
+            font-weight: 600;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--igbo-green);
+            cursor: pointer;
+        }
+
+        /* ===== Hero Section ===== */
+        .gallery-hero {
+            background: linear-gradient(rgba(10, 61, 31, 0.85), rgba(10, 61, 31, 0.85)), 
+                        url('images/gallery-hero.jpg') center/cover;
+            color: white;
+            padding: 8rem 2rem 5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .gallery-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('images/wave-pattern.svg') repeat-x;
+            background-size: contain;
+            z-index: 1;
+        }
+
+        .gallery-hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1rem;
+        }
+
+        .gallery-hero p {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* ===== Gallery Filter ===== */
+        .gallery-filter {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .filter-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .filter-tab {
+            padding: 0.8rem 1.5rem;
+            background: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .filter-tab:hover {
+            background: var(--igbo-green);
+            color: white;
+        }
+
+        .filter-tab.active {
+            background: var(--igbo-green);
+            color: white;
+        }
+
+        /* ===== Gallery Grid ===== */
+        .gallery-section {
+            padding: 3rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            aspect-ratio: 4/3;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            padding: 1.5rem 1rem 1rem;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover .gallery-caption {
+            opacity: 1;
+        }
+
+        .gallery-caption h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .gallery-caption p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .video-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ===== Video Highlights ===== */
+        .video-section {
+            background: var(--deep-forest);
+            color: white;
+            padding: 6rem 2rem;
+            position: relative;
+        }
+
+        .video-section::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('images/wave-pattern-light.svg') repeat-x;
+            background-size: contain;
+        }
+
+        .video-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .video-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .video-thumbnail {
+            position: relative;
+            aspect-ratio: 16/9;
+        }
+
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(245, 176, 65, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .video-info {
+            padding: 1.5rem;
+        }
+
+        .video-info h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .video-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 1rem;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .filter-tabs {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 1rem;
+            }
+        }
+
+        /* ===== Cultural Elements ===== */
+        .igbo-proverb {
+            font-style: italic;
+            padding: 1.5rem;
+            background: rgba(12, 107, 13, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid var(--igbo-gold);
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .igbo-proverb::before {
+            content: '"';
+            font-size: 5rem;
+            position: absolute;
+            top: -1rem;
+            left: 0.5rem;
+            color: rgba(12, 107, 13, 0.2);
+            line-height: 1;
+            font-family: serif;
+        }
+
+        .kolanut-icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: url('images/kolanut-icon.svg') no-repeat center;
+            background-size: contain;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            background: var(--text-dark);
+            color: var(--text-light);
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-logo {
+            height: 60px;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-about p {
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--igbo-green);
+            transform: translateY(-3px);
+        }
+
+        .footer-links h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--igbo-gold);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            opacity: 0.8;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            padding-left: 5px;
+            color: var(--igbo-gold);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            padding-bottom: 10px;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo-link">
+                <img src="images/isa-logo.png" alt="ISA FUW Logo" class="logo">
+            </a>
+
+            <nav class="nav-links">
+                <a href="isa-home.html">Home</a>
+                <a href="isa-about.html">About</a>
+                <a href="isa-event.html">Events</a>
+                <a href="isa-gallery.html" class="active">Gallery</a>
+                <a href="isa-Membership.html">Membership</a>
+                <a href="isa-get-your-digital-ID.html">Digital ID</a>
+                <a href="isa-Contact.html">Contact</a>
+            </nav>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="gallery-hero">
+        <h1>Our Memories</h1>
+        <p>Relive the vibrant moments from our cultural events, academic programs, and community gatherings</p>
+    </section>
+
+    <!-- Gallery Filter -->
+    <section class="gallery-filter">
+        <div class="filter-tabs">
+            <button class="filter-tab active" data-filter="all">All Photos</button>
+            <button class="filter-tab" data-filter="cultural">Cultural Events</button>
+            <button class="filter-tab" data-filter="academic">Academic Programs</button>
+            <button class="filter-tab" data-filter="social">Social Gatherings</button>
+            <button class="filter-tab" data-filter="community">Community Service</button>
+        </div>
+    </section>
+
+    <!-- Gallery Grid -->
+    <section class="gallery-section">
+        <h2 class="section-title">Photo Gallery</h2>
+        
+        <div class="igbo-proverb">
+            "Ihe osise na-adịgide adịgide karịa okwu" - Pictures last longer than words
+        </div>
+        
+        <div class="gallery-grid" id="lightgallery">
+            <!-- Cultural Event 1 -->
+            <a href="images/gallery/cultural-day-1.jpg" class="gallery-item" data-sub-html=" <h3>Igbo Cultural Day 2023</h3><p>Traditional dancers performing at our annual cultural festival</p>" data-filter="cultural">
+                <img src="/My Projects/ISA's Website Folder/ISA images/Cultural Day Performance.jpg" alt="Cultural Day Performance">
+                <div class="gallery-caption">
+                    <h3>Igbo Cultural Day 2023</h3>
+                    <p>Traditional dancers performing</p>
+                </div>
+            </a>
+            
+            <!-- Academic Program 1 -->
+            <a href="images/gallery/tutorial-1.jpg" class="gallery-item" data-sub-html="<h3>Academic Bootcamp</h3><p>Students participating in our intensive tutorial sessions</p>" data-filter="academic">
+                <img src="/My Projects/ISA's Website Folder/ISA images/Academic Tutorial.jpg" alt="Academic Tutorial">
+                <div class="gallery-caption">
+                    <h3>Academic Bootcamp</h3>
+                    <p>Students in tutorial session</p>
+                </div>
+            </a>
+            
+            <!-- Social Gathering 1 -->
+            <a href="images/gallery/social-1.jpg" class="gallery-item" data-sub-html="<h3>New Members Welcome</h3><p>Freshers induction party 2023</p>" data-filter="social">
+                <img src="/My Projects/ISA's Website Folder/ISA images/Social Gathering.jpg" alt="Social Gathering">
+                <div class="gallery-caption">
+                    <h3>New Members Welcome</h3>
+                    <p>Freshers induction party 2023</p>
+                </div>
+            </a>
+            
+            <!-- Community Service 1 -->
+            <a href="images/gallery/community-1.jpg" class="gallery-item" data-sub-html="<h3>Orphanage Visit</h3><p>ISA members during our charity outreach program</p>" data-filter="community">
+                <img src="/My Projects/ISA's Website Folder/ISA images/Community Service.jpg" alt="Community Service">
+                <div class="gallery-caption">
+                    <h3>Orphanage Visit</h3>
+                    <p>Charity outreach program</p>
+                </div>
+            </a>
+            
+            <!-- Cultural Event 2 -->
+            <a href="images/gallery/cultural-day-2.jpg" class="gallery-item" data-sub-html="<h3>Igbo Fashion Show</h3><p>Models showcasing traditional Igbo attire</p>" data-filter="cultural">
+                <img src="/My Projects/ISA's Website Folder/ISA images/Fashion Show.jpg" alt="Fashion Show">
+                <div class="gallery-caption">
+                    <h3>Igbo Fashion Show</h3>
+                    <p>Traditional attire showcase</p>
+                </div>
+            </a>
+            
+            <!-- Academic Program 2 -->
+            <a href="images/gallery/tutorial-2.jpg" class="gallery-item" data-sub-html="<h3>Career Workshop</h3><p>Alumni sharing professional experiences with students</p>" data-filter="academic">
+                <img src="/My Projects/ISA's Website Folder/ISA images/G Career Workshop.jpg" alt="Career Workshop">
+                <div class="gallery-caption">
+                    <h3>Career Workshop</h3>
+                    <p>Alumni sharing experiences</p>
+                </div>
+            </a>
+            
+            <!-- Social Gathering 2 -->
+            <a href="images/gallery/social-2.jpg" class="gallery-item" data-sub-html="<h3>End of Year Party</h3><p>Members celebrating the successful academic year</p>" data-filter="social">
+                <img src="/My Projects/ISA's Website Folder/ISA images/End of Year Party.jpg" alt="End of Year Party">
+                <div class="gallery-caption">
+                    <h3>End of Year Party</h3>
+                    <p>Celebrating academic success</p>
+                </div>
+            </a>
+            
+            <!-- Community Service 2 -->
+            <a href="images/gallery/community-2.jpg" class="gallery-item" data-sub-html="<h3>Environmental Sanitation</h3><p>ISA clean-up exercise in Wukari community</p>" data-filter="community">
+                <img src="/My Projects/ISA's Website Folder/ISA images/Environmental Cleanup.jpg" alt="Environmental Cleanup">
+                <div class="gallery-caption">
+                    <h3>Environmental Sanitation</h3>
+                    <p>Community clean-up exercise</p>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Video Highlights -->
+    <section class="video-section">
+        <div class="video-container">
+            <h2 class="section-title" style="color: white;">Video Highlights</h2>
+            
+            <div class="igbo-proverb" style="background: rgba(255,255,255,0.1); color: white; border-left-color: var(--igbo-gold);">
+                "Onye na-ekiri ihe nkiri, ọ na-ahụ ihe ọhụụ" - Whoever watches videos sees visions
+            </div>
+            
+            <div class="video-grid">
+                <!-- Video 1 -->
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="/My Projects/ISA's Website Folder/ISA images/1744630367258.jpg" alt="Cultural Day Highlights">
+                        <div class="play-button" data-video="/My Projects/ISA's Website Folder/ISA Videos/Igbo Cultural Day 2024.mp4">
+                            <i class="fas fa-play" style="color: white; font-size: 1.5rem;"></i>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <h3>Igbo Cultural Day 2023</h3>
+                        <p>Highlights from our biggest annual event featuring dances, fashion, and cuisine</p>
+                        <div class="video-meta">
+                            <span><i class="fas fa-calendar-alt"></i> Oct 15, 2023</span>
+                            <span><i class="fas fa-eye"></i> 1.2K views</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video 2 -->
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="/My Projects/ISA's Website Folder/ISA images/1744630367258.jpg" alt="President Interview">
+                        <div class="play-button" data-video="/My Projects/ISA's Website Folder/ISA Videos/Meet Our President.mp4">
+                            <i class="fas fa-play" style="color: white; font-size: 1.5rem;"></i>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <h3>Meet Our President</h3>
+                        <p>Exclusive interview with ISA FUW President 2023/2024</p>
+                        <div class="video-meta">
+                            <span><i class="fas fa-calendar-alt"></i> Nov 5, 2023</span>
+                            <span><i class="fas fa-eye"></i> 856 views</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Video 3 -->
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="/My Projects/ISA's Website Folder/ISA images/1744630367258.jpg" alt="Tutorial Session">
+                        <div class="play-button" data-video="/My Projects/ISA's Website Folder/ISA Videos/Chemistry Tutorial.mp4">
+                            <i class="fas fa-play" style="color: white; font-size: 1.5rem;"></i>
+                        </div>
+                    </div>
+                    <div class="video-info">
+                        <h3>Chemistry Tutorial</h3>
+                        <p>Recorded session from our academic bootcamp</p>
+                        <div class="video-meta">
+                            <span><i class="fas fa-calendar-alt"></i> Jan 20, 2024</span>
+                            <span><i class="fas fa-eye"></i> 1.5K views</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-about">
+                <img src="Icons/isalogo.png" alt="ISA Logo" class="footer-logo">
+                <p>The Igbo Students Association at Federal University Wukari promotes cultural heritage, academic excellence, and unity among Igbo students.</p>
+                
+                <div class="social-links">
+                    <a href="https://facebook.com/groups/176464233949362/"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="https://chat.whatsapp.com/Dlu8eNnHZRDFsO7wEsUB0B"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="isa-home.html">Home</a></li>
+                    <li><a href="isa-about.html">About Us</a></li>
+                    <li><a href="isa-event.html">Events Calendar</a></li>
+                    <li><a href="isa-gallery.html">Gallery</a></li>
+                    <li><a href="isa-Membership.html">Membership</a></li>
+                    <li><a href="isa-get-your-digital-ID.html">Digital ID</a></li>
+                    <li><a href="isa-about.html">Contact Executives</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#">Igbo Language Tools</a></li>
+                    <li><a href="#">Past Questions</a></li>
+                    <li><a href="#">Scholarships</a></li>
+                    <li><a href="#">Member Handbook</a></li>
+                    <li><a href="#">Alumni Network</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h3>Contact</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> Federal University Wukari, Taraba State</li>
+                    <li><i class="fas fa-phone"></i> +234 704 727 1670</li>
+                    <li><i class="fas fa-envelope"></i> isafuw@gmail.com</li>
+                    <li><i class="fas fa-clock"></i> Office Hours: Mon-Fri, 9AM-4PM</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>&copy; 2024 Igbo Students Association, Federal University Wukari. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Video Modal -->
+    <div class="video-modal" id="videoModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center;">
+        <div style="position: relative; width: 90%; max-width: 900px;">
+            <button id="closeModal" style="position: absolute; top: -40px; right: 0; background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="video-container" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+                <iframe id="videoFrame" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.1/lightgallery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lg-fullscreen/2.7.1/lg-fullscreen.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lg-zoom/2.7.1/lg-zoom.min.js"></script>
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // Initialize lightGallery
+        lightGallery(document.getElementById('lightgallery'), {
+            selector: '.gallery-item',
+            download: false,
+            counter: false,
+            getCaptionFromTitleOrAlt: false
+        });
+
+        // Filter functionality
+        const filterTabs = document.querySelectorAll('.filter-tab');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        
+        filterTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Update active tab
+                filterTabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                
+                const filterValue = this.dataset.filter;
+                
+                // Filter items
+                galleryItems.forEach(item => {
+                    if (filterValue === 'all' || item.dataset.filter === filterValue) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Video modal functionality
+        const playButtons = document.querySelectorAll('.play-button');
+        const videoModal = document.getElementById('videoModal');
+        const videoFrame = document.getElementById('videoFrame');
+        const closeModal = document.getElementById('closeModal');
+        
+        playButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const videoUrl = this.dataset.video;
+                videoFrame.src = videoUrl;
+                videoModal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        closeModal.addEventListener('click', function() {
+            videoFrame.src = '';
+            videoModal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Close modal when clicking outside
+        videoModal.addEventListener('click', function(e) {
+            if (e.target === this) {
+                videoFrame.src = '';
+                videoModal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Animate gallery items on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.gallery-item, .video-card').forEach(item => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(20px)';
+            item.style.transition = 'all 0.5s ease';
+            observer.observe(item);
+        });
+    </script>
+</body>
+</html>

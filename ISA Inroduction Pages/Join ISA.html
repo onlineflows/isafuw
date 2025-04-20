@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en-ig">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join ISA FUW | Igbo Students Association</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <style>
+        /* ===== Base Styles ===== */
+        :root {
+            --igbo-green: #0C6B0D;
+            --igbo-gold: #F5B041;
+            --deep-forest: #0A3D1F;
+            --light-cream: #FFF9E6;
+            --text-dark: #1E1E1E;
+            --text-light: #FFFFFF;
+            
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.12);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.16);
+            --transition: all 0.3s ease;
+        }
+
+        /* ===== Base Reset ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background-color: var(--light-cream);
+            overflow-x: hidden;
+        }
+
+        /* ===== Modern Header ===== */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+        }
+
+        .logo {
+            height: 50px;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: var(--transition);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--igbo-green);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--igbo-green);
+            font-weight: 600;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--igbo-green);
+            cursor: pointer;
+        }
+
+        /* ===== Hero Section ===== */
+        .join-hero {
+            background: linear-gradient(rgba(10, 61, 31, 0.85), rgba(10, 61, 31, 0.85)), 
+                        url('images/join-hero.jpg') center/cover;
+            color: white;
+            padding: 8rem 2rem 5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .join-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('images/wave-pattern.svg') repeat-x;
+            background-size: contain;
+            z-index: 1;
+        }
+
+        .join-hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1rem;
+        }
+
+        .join-hero p {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--igbo-gold);
+            color: var(--text-dark);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: var(--transition);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            background: #F8C471;
+        }
+
+        /* ===== Why Join Section ===== */
+        .benefits-section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .benefit-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            gap: 1rem;
+            transition: var(--transition);
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .benefit-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--igbo-green);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .benefit-content h3 {
+            color: var(--deep-forest);
+            margin-bottom: 0.5rem;
+        }
+
+        /* ===== Membership Tiers ===== */
+        .tiers-section {
+            background: var(--deep-forest);
+            color: white;
+            padding: 6rem 2rem;
+            position: relative;
+        }
+
+        .tiers-section::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('images/wave-pattern-light.svg') repeat-x;
+            background-size: contain;
+        }
+
+        .tiers-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tiers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .tier-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            color: var(--text-dark);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+
+        .tier-card.popular {
+            border: 2px solid var(--igbo-gold);
+        }
+
+        .tier-card.popular::before {
+            content: 'Most Popular';
+            position: absolute;
+            top: 15px;
+            right: -30px;
+            background: var(--igbo-gold);
+            color: var(--text-dark);
+            padding: 0.3rem 2rem;
+            transform: rotate(45deg);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .tier-card h3 {
+            font-size: 1.5rem;
+            color: var(--deep-forest);
+            margin-bottom: 1rem;
+        }
+
+        .tier-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--igbo-green);
+            margin-bottom: 1.5rem;
+        }
+
+        .tier-price span {
+            font-size: 1rem;
+            font-weight: normal;
+            color: #666;
+        }
+
+        .tier-features {
+            margin-bottom: 2rem;
+        }
+
+        .tier-features li {
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .tier-features li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--igbo-green);
+        }
+
+        .tier-button {
+            display: block;
+            text-align: center;
+            background: var(--igbo-green);
+            color: white;
+            padding: 0.8rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .tier-button:hover {
+            background: var(--deep-forest);
+            transform: translateY(-2px);
+        }
+
+        /* ===== Registration Form ===== */
+        .form-section {
+            padding: 6rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-container {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .form-step {
+            display: none;
+        }
+
+        .form-step.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .form-button {
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .form-button.next {
+            background: var(--igbo-green);
+            color: white;
+        }
+
+        .form-button.prev {
+            background: #f0f0f0;
+            color: var(--text-dark);
+        }
+
+        .form-button.submit {
+            background: var(--igbo-gold);
+            color: var(--text-dark);
+            width: 100%;
+        }
+
+        /* ===== Payment Methods ===== */
+        .payment-methods {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .payment-method {
+            flex: 1;
+            text-align: center;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .payment-method:hover {
+            border-color: var(--igbo-green);
+        }
+
+        .payment-method.selected {
+            border-color: var(--igbo-green);
+            background: rgba(12, 107, 13, 0.05);
+        }
+
+        .payment-method img {
+            height: 30px;
+            margin-bottom: 0.5rem;
+        }
+
+        /* ===== Testimonials ===== */
+        .testimonials-section {
+            background: #f9f9f9;
+            padding: 6rem 2rem;
+        }
+
+        .testimonials-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            font-size: 4rem;
+            color: rgba(12, 107, 13, 0.1);
+            font-family: serif;
+            line-height: 1;
+        }
+
+        .testimonial-content {
+            margin-bottom: 1rem;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .author-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .author-info h4 {
+            margin-bottom: 0.2rem;
+            color: var(--deep-forest);
+        }
+
+        .author-info p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* ===== Footer ===== */
+        footer {
+            background: var(--text-dark);
+            color: var(--text-light);
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-logo {
+            height: 60px;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-about p {
+            opacity: 0.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--igbo-green);
+            transform: translateY(-3px);
+        }
+
+        .footer-links h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--igbo-gold);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            opacity: 0.8;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            padding-left: 5px;
+            color: var(--igbo-gold);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            padding-bottom: 10px;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            opacity: 0.7;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .payment-methods {
+                flex-direction: column;
+            }
+        }
+
+        /* ===== Cultural Elements ===== */
+        .igbo-proverb {
+            font-style: italic;
+            padding: 1.5rem;
+            background: rgba(12, 107, 13, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid var(--igbo-gold);
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .igbo-proverb::before {
+            content: '"';
+            font-size: 5rem;
+            position: absolute;
+            top: -1rem;
+            left: 0.5rem;
+            color: rgba(12, 107, 13, 0.2);
+            line-height: 1;
+            font-family: serif;
+        }
+
+        .kolanut-icon {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: url('images/kolanut-icon.svg') no-repeat center;
+            background-size: contain;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo-link">
+                <img src="images/isa-logo.png" alt="ISA FUW Logo" class="logo">
+            </a>
+
+            <nav class="nav-links">
+                <a href="isa-home.html" class="active">Home</a>
+                <a href="isa-about.html">About</a>
+                <a href="isa-event.html">Events</a>
+                <a href="isa-gallery.html">Gallery</a>
+                <a href="isa-Membership.html">Membership</a>
+                <a href="isa-get-your-digital-ID.html">Digital ID</a>
+                <a href="isa-Contact.html">Contact</a>
+            </nav>
+
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="join-hero">
+        <h1>Join ISA FUW Today</h1>
+        <p>Become part of our vibrant community preserving Igbo heritage while excelling academically</p>
+        <a href="#join-form" class="cta-button">Start Registration</a>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits-section">
+        <h2 class="section-title">Why Join ISA FUW?</h2>
+        
+        <div class="igbo-proverb">
+            "Otu onye tuo izu, o gbue ochu" - When one person announces the market day, others will follow
+        </div>
+        
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="benefit-content">
+                    <h3>Strong Community</h3>
+                    <p>Connect with fellow Igbo students in Taraba State for mutual support and networking.</p>
+                </div>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div class="benefit-content">
+                    <h3>Academic Excellence</h3>
+                    <p>Access tutorials, past questions, and mentorship from senior students.</p>
+                </div>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-drum"></i>
+                </div>
+                <div class="benefit-content">
+                    <h3>Cultural Pride</h3>
+                    <p>Participate in Igbo language classes, dance troupes, and cultural festivals.</p>
+                </div>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+                <div class="benefit-content">
+                    <h3>Career Support</h3>
+                    <p>Benefit from our alumni network and professional development workshops.</p>
+                </div>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <div class="benefit-content">
+                    <h3>Home Away From Home</h3>
+                    <p>Find comfort and support in our community while studying in Taraba State.</p>
+                </div>
+            </div>
+            
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-hand-holding-heart"></i>
+                </div>
+                <div class="benefit-content">
+                    <h3>Welfare Assistance</h3>
+                    <p>Receive support during emergencies and challenging situations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Membership Tiers -->
+    <section class="tiers-section">
+        <div class="tiers-container">
+            <h2 class="section-title" style="color: white;">Membership Options</h2>
+            
+            <div class="igbo-proverb" style="background: rgba(255,255,255,0.1); color: white; border-left-color: var(--igbo-gold);">
+                "Onye aghana nwanne ya" - Do not abandon your brother/sister
+            </div>
+            
+            <div class="tiers-grid">
+                <!-- Regular Member -->
+                <div class="tier-card">
+                    <h3>Regular Member</h3>
+                    <div class="tier-price">₦3,000 <span>/year</span></div>
+                    <ul class="tier-features">
+                        <li>For all Igbo FUW students</li>
+                        <li>Access to all ISA events</li>
+                        <li>Academic support resources</li>
+                        <li>Cultural participation</li>
+                        <li>Voting rights</li>
+                    </ul>
+                    <a href="#join-form" class="tier-button">Select Plan</a>
+                </div>
+                
+                <!-- Premium Member -->
+                <div class="tier-card popular">
+                    <h3>Premium Member</h3>
+                    <div class="tier-price">₦5,000 <span>/year</span></div>
+                    <ul class="tier-features">
+                        <li>All Regular benefits</li>
+                        <li>Priority event registration</li>
+                        <li>Free cultural workshop</li>
+                        <li>Academic mentorship</li>
+                        <li>Exclusive networking</li>
+                    </ul>
+                    <a href="#join-form" class="tier-button">Select Plan</a>
+                </div>
+                
+                <!-- Associate Member -->
+                <div class="tier-card">
+                    <h3>Associate Member</h3>
+                    <div class="tier-price">₦1,500 <span>/year</span></div>
+                    <ul class="tier-features">
+                        <li>For non-Igbo students</li>
+                        <li>Event participation</li>
+                        <li>Cultural learning</li>
+                        <li>Academic resources</li>
+                        <li>Community building</li>
+                    </ul>
+                    <a href="#join-form" class="tier-button">Select Plan</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Registration Form -->
+    <section class="form-section" id="join-form">
+        <div class="form-container">
+            <h2 class="section-title">Membership Registration</h2>
+            
+            <form id="membershipForm">
+                <!-- Step 1: Personal Info -->
+                <div class="form-step active" id="step1">
+                    <h3 style="margin-bottom: 1.5rem; color: var(--igbo-green);">Personal Information</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="dob">Date of Birth</label>
+                            <input type="text" id="dob" class="datepicker" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="form-button next" onclick="nextStep(1, 2)">Next</button>
+                    </div>
+                </div>
+                
+                <!-- Step 2: Academic Info -->
+                <div class="form-step" id="step2">
+                    <h3 style="margin-bottom: 1.5rem; color: var(--igbo-green);">Academic Information</h3>
+                    
+                    <div class="form-group">
+                        <label for="matricNumber">Matric Number</label>
+                        <input type="text" id="matricNumber" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="faculty">Faculty</label>
+                            <select id="faculty" required>
+                                <option value="">Select Faculty</option>
+                                <option value="science">Science</option>
+                                <option value="arts">Arts</option>
+                                <option value="social">Social Sciences</option>
+                                <option value="engineering">Engineering</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="level">Level</label>
+                            <select id="level" required>
+                                <option value="">Select Level</option>
+                                <option value="100">100 Level</option>
+                                <option value="200">200 Level</option>
+                                <option value="300">300 Level</option>
+                                <option value="400">400 Level</option>
+                                <option value="500">500 Level</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="form-button prev" onclick="prevStep(2, 1)">Previous</button>
+                        <button type="button" class="form-button next" onclick="nextStep(2, 3)">Next</button>
+                    </div>
+                </div>
+                
+                <!-- Step 3: Membership Type -->
+                <div class="form-step" id="step3">
+                    <h3 style="margin-bottom: 1.5rem; color: var(--igbo-green);">Membership Type</h3>
+                    
+                    <div class="form-group">
+                        <label>Select Your Membership</label>
+                        <div class="tiers-grid" style="grid-template-columns: 1fr; gap: 1rem;">
+                            <label class="tier-card" style="cursor: pointer;">
+                                <input type="radio" name="membershipType" value="regular" checked style="display: none;">
+                                <h3>Regular Member</h3>
+                                <div class="tier-price">₦3,000 <span>/year</span></div>
+                                <ul class="tier-features">
+                                    <li>For all Igbo FUW students</li>
+                                    <li>Access to all ISA events</li>
+                                    <li>Academic support resources</li>
+                                </ul>
+                            </label>
+                            
+                            <label class="tier-card popular" style="cursor: pointer;">
+                                <input type="radio" name="membershipType" value="premium" style="display: none;">
+                                <h3>Premium Member</h3>
+                                <div class="tier-price">₦5,000 <span>/year</span></div>
+                                <ul class="tier-features">
+                                    <li>All Regular benefits</li>
+                                    <li>Priority event registration</li>
+                                    <li>Free cultural workshop</li>
+                                </ul>
+                            </label>
+                            
+                            <label class="tier-card" style="cursor: pointer;">
+                                <input type="radio" name="membershipType" value="associate" style="display: none;">
+                                <h3>Associate Member</h3>
+                                <div class="tier-price">₦1,500 <span>/year</span></div>
+                                <ul class="tier-features">
+                                    <li>For non-Igbo students</li>
+                                    <li>Event participation</li>
+                                    <li>Cultural learning</li>
+                                </ul>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="form-button prev" onclick="prevStep(3, 2)">Previous</button>
+                        <button type="button" class="form-button next" onclick="nextStep(3, 4)">Next</button>
+                    </div>
+                </div>
+                
+                <!-- Step 4: Payment -->
+                <div class="form-step" id="step4">
+                    <h3 style="margin-bottom: 1.5rem; color: var(--igbo-green);">Payment Information</h3>
+                    
+                    <div class="form-group">
+                        <label>Select Payment Method</label>
+                        <div class="payment-methods">
+                            <div class="payment-method selected" data-method="paystack">
+                                <img src="images/paystack-logo.png" alt="Paystack">
+                                <div>Paystack</div>
+                            </div>
+                            <div class="payment-method" data-method="bank">
+                                <img src="images/bank-transfer.png" alt="Bank Transfer">
+                                <div>Bank Transfer</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="paystack-section">
+                        <div class="form-group">
+                            <label for="cardNumber">Card Number</label>
+                            <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456">
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="expiry">Expiry Date</label>
+                                <input type="text" id="expiry" placeholder="MM/YY">
+                            </div>
+                            <div class="form-group">
+                                <label for="cvv">CVV</label>
+                                <input type="text" id="cvv" placeholder="123">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="bank-section" style="display: none;">
+                        <div class="igbo-proverb" style="background: rgba(12, 107, 13, 0.1);">
+                            <p><strong>Bank Transfer Details:</strong></p>
+                            <p>Bank: Zenith Bank<br>
+                            Account Name: ISA FUW<br>
+                            Account Number: 1012345678</p>
+                            <p>Upload proof of payment below</p>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="proof">Proof of Payment</label>
+                            <input type="file" id="proof">
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="form-button prev" onclick="prevStep(4, 3)">Previous</button>
+                        <button type="submit" class="form-button submit">Complete Registration</button>
+                    </div>
+                </div>
+                
+                <!-- Step 5: Confirmation -->
+                <div class="form-step" id="step5">
+                    <div style="text-align: center; padding: 2rem;">
+                        <div style="font-size: 5rem; color: var(--igbo-green); margin-bottom: 1rem;">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h3 style="color: var(--igbo-green); margin-bottom: 1rem;">Registration Successful!</h3>
+                        <p>Welcome to ISA FUW! Your membership details will be sent to your email shortly.</p>
+                        <div style="margin-top: 2rem;">
+                            <a href="isa-get-your-digital-ID.html" class="tier-button" style="display: inline-block; width: auto; padding: 0.8rem 2rem; margin: 0.5rem;">
+                                Get Your Digital ID
+                            </a>
+                            <a href="whatsapp-group.html" class="tier-button" style="display: inline-block; width: auto; padding: 0.8rem 2rem; margin: 0.5rem; background: var(--igbo-gold);">
+                                Join WhatsApp Group
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials-section">
+        <div class="testimonials-container">
+            <h2 class="section-title">What Our Members Say</h2>
+            
+            <div class="igbo-proverb">
+                "Onye ahụla nwanne ya, ya kpọọ ya" - Whoever sees their sibling should call them
+            </div>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        ISA FUW became my family in Taraba State. The academic support helped me improve my grades, and the cultural events keep me connected to my roots.
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="images/testimonial1.jpg" alt="Chidinma">
+                        </div>
+                        <div class="author-info">
+                            <h4>Chidinma Okeke</h4>
+                            <p>300L Computer Science</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        As a non-Igbo member, I've learned so much about the beautiful Igbo culture through the language classes and festivals. The community is very welcoming.
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="images/testimonial2.jpg" alt="Abdul">
+                        </div>
+                        <div class="author-info">
+                            <h4>Abdul Mohammed</h4>
+                            <p>Associate Member</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        The alumni network helped me secure an internship last summer. Being part of ISA opens doors you wouldn't imagine!
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="images/testimonial3.jpg" alt="Emeka">
+                        </div>
+                        <div class="author-info">
+                            <h4>Emeka Nwankwo</h4>
+                            <p>Graduated 2022</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-about">
+                <img src="Icons/isalogo.png" alt="ISA Logo" class="footer-logo">
+                <p>The Igbo Students Association at Federal University Wukari promotes cultural heritage, academic excellence, and unity among Igbo students.</p>
+                
+                <div class="social-links">
+                    <a href="https://facebook.com/groups/176464233949362/"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="https://chat.whatsapp.com/Dlu8eNnHZRDFsO7wEsUB0B"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="isa-home.html">Home</a></li>
+                    <li><a href="isa-about.html">About Us</a></li>
+                    <li><a href="isa-event.html">Events Calendar</a></li>
+                    <li><a href="isa-gallery.html">Gallery</a></li>
+                    <li><a href="isa-Membership.html">Membership</a></li>
+                    <li><a href="isa-get-your-digital-ID.html">Digital ID</a></li>
+                    <li><a href="isa-about.html">Contact Executives</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#">Igbo Language Tools</a></li>
+                    <li><a href="#">Past Questions</a></li>
+                    <li><a href="#">Scholarships</a></li>
+                    <li><a href="#">Member Handbook</a></li>
+                    <li><a href="#">Alumni Network</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h3>Contact</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> Federal University Wukari, Taraba State</li>
+                    <li><i class="fas fa-phone"></i> +234 704 727 1670</li>
+                    <li><i class="fas fa-envelope"></i> isafuw@gmail.com</li>
+                    <li><i class="fas fa-clock"></i> Office Hours: Mon-Fri, 9AM-4PM</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>&copy; 2024 Igbo Students Association, Federal University Wukari. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // Initialize date picker
+        flatpickr("#dob", {
+            dateFormat: "Y-m-d",
+            maxDate: "today"
+        });
+
+        // Form step navigation
+        function nextStep(current, next) {
+            document.getElementById(`step${current}`).classList.remove('active');
+            document.getElementById(`step${next}`).classList.add('active');
+            window.scrollTo({ top: document.getElementById('join-form').offsetTop - 100, behavior: 'smooth' });
+        }
+
+        function prevStep(current, prev) {
+            document.getElementById(`step${current}`).classList.remove('active');
+            document.getElementById(`step${prev}`).classList.add('active');
+            window.scrollTo({ top: document.getElementById('join-form').offsetTop - 100, behavior: 'smooth' });
+        }
+
+        // Payment method selection
+        const paymentMethods = document.querySelectorAll('.payment-method');
+        paymentMethods.forEach(method => {
+            method.addEventListener('click', function() {
+                paymentMethods.forEach(m => m.classList.remove('selected'));
+                this.classList.add('selected');
+                
+                if (this.dataset.method === 'paystack') {
+                    document.getElementById('paystack-section').style.display = 'block';
+                    document.getElementById('bank-section').style.display = 'none';
+                } else {
+                    document.getElementById('paystack-section').style.display = 'none';
+                    document.getElementById('bank-section').style.display = 'block';
+                }
+            });
+        });
+
+        // Tier card selection
+        const tierCards = document.querySelectorAll('.tiers-grid .tier-card');
+        tierCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const radio = this.querySelector('input[type="radio"]');
+                radio.checked = true;
+                
+                tierCards.forEach(c => c.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+
+        // Form submission
+        document.getElementById('membershipForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const paymentMethod = document.querySelector('.payment-method.selected').dataset.method;
+            
+            if (paymentMethod === 'paystack') {
+                // Paystack integration
+                const handler = PaystackPop.setup({
+                    key: 'pk_test_your_paystack_key',
+                    email: document.getElementById('email').value,
+                    amount: getMembershipAmount() * 100, // in kobo
+                    currency: 'NGN',
+                    ref: 'ISA' + Math.floor(Math.random() * 1000000000 + 1),
+                    callback: function(response) {
+                        // On successful payment
+                        nextStep(4, 5);
+                    },
+                    onClose: function() {
+                        alert('Payment window closed');
+                    }
+                });
+                handler.openIframe();
+            } else {
+                // Bank transfer submission
+                nextStep(4, 5);
+            }
+        });
+
+        function getMembershipAmount() {
+            const selectedTier = document.querySelector('input[name="membershipType"]:checked').value;
+            
+            switch(selectedTier) {
+                case 'regular': return 3000;
+                case 'premium': return 5000;
+                case 'associate': return 1500;
+                default: return 3000;
+            }
+        }
+
+        // Animate elements on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.benefit-card, .tier-card, .testimonial-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'all 0.5s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
